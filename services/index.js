@@ -132,6 +132,25 @@ export const getCategories = async () => {
     return result.categories;
 };
 
+export const getDestinations = async () => {
+    const query = gql `
+        query GetDestinations {
+            destinations {
+                destinationName
+                destinationSlug
+                destinationImage {
+                  url
+                  width
+                  height
+                }
+            }
+        }
+    `
+
+    const result = await request(graphqlAPI, query);
+    return result.destinations;
+};
+
 export const submitComment = async (obj) => {
     const result = await fetch('/api/comments', {
         method: 'POST',

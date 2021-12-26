@@ -1,7 +1,7 @@
 import react, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
-import { PostCard, Categories, PostWidget, FeaturedPostSlider } from '../components';
+import { PostCard, Categories, PostWidget, FeaturedPostSlider, Destinations } from '../components';
 import { getPosts, getFeaturedPosts } from '../services';
 
 export default function Home( { posts } ) {
@@ -13,7 +13,7 @@ export default function Home( { posts } ) {
       setDataLoaded(true);
     })
   }, [])
-  console.log(posts);
+  // console.log(posts);
   return (
     <div className="main-wrap">
       <Head>
@@ -23,6 +23,7 @@ export default function Home( { posts } ) {
 
       <main className="flex flex-wrap">
         <FeaturedPostSlider featuredPosts={featuredPosts} />
+        <Destinations />
         {/* <div className="w-full m-4 bg-white py-4">
           {dataLoaded && featuredPosts.map((featuredPost) => (
             <div key={featuredPost.slug}>
