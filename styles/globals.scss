@@ -62,3 +62,9 @@ a {
 * {
   box-sizing: border-box;
 }
+header#main-header.scroll-down {
+	transform: translate3d(0, -121px, 0);
+}
+header#main-header.scroll-up {
+	filter: drop-shadow(0 -10px 20px rgb(170, 170, 170));
+}

@@ -10,3 +10,4 @@ export { default as CommentsForm } from './CommentsForm';
 export { default as PostDetail } from './PostDetail';
 export { default as FeaturedPostSlider } from './FeaturedPostSlider';
 export { default as Destinations } from './Destinations';
+export { default as AuthorsFeaturedPost } from './AuthorsFeaturedPost';

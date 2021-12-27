@@ -28,6 +28,12 @@ export const getPosts = async () => {
                             name
                             slug
                         }
+                        destination {
+                            destinationName
+                            destinationImage {
+                              url
+                            }
+                        }
                     }
                 }
             }
@@ -65,6 +71,12 @@ export const getPostDetails = async (slug) => {
                 content {
                     raw
                 }
+                destination {
+                    destinationName
+                    destinationImage {
+                      url
+                    }
+                }
             }
         }
     `
@@ -93,6 +105,27 @@ export const getRecentPosts = async () => {
 
     const result = await request(graphqlAPI, query);
     return result.posts;
+};
+
+
+export const getAuthorsInfo = async () => {
+    const query = gql `
+        query GetAuthorsInfo() {
+            author {
+                bio
+                facebook
+                github
+                name
+                picture {
+                  url
+                }
+                twitter
+            }
+        }
+    `
+
+    const result = await request(graphqlAPI, query);
+    return result.author;
 };
 
 
@@ -132,24 +165,24 @@ export const getCategories = async () => {
     return result.categories;
 };
 
-export const getDestinations = async () => {
-    const query = gql `
-        query GetDestinations {
-            destinations {
-                destinationName
-                destinationSlug
-                destinationImage {
-                  url
-                  width
-                  height
-                }
-            }
-        }
-    `
+// export const getDestinations = async () => {
+//     const query = gql `
+//         query GetDestinations {
+//             destinations {
+//                 destinationName
+//                 destinationSlug
+//                 destinationImage {
+//                   url
+//                   width
+//                   height
+//                 }
+//             }
+//         }
+//     `
 
-    const result = await request(graphqlAPI, query);
-    return result.destinations;
-};
+//     const result = await request(graphqlAPI, query);
+//     return result.destinations;
+// };
 
 export const submitComment = async (obj) => {
     const result = await fetch('/api/comments', {
@@ -185,7 +218,7 @@ export const getComments = async (slug) => {
 export const getFeaturedPosts = async (slug) => {
     const query = gql `
         query GetCategoryPost() {
-            posts(where: { featuredPost: true }) {
+            posts(orderBy: createdAt_DESC, where: { featuredPost: true }) {
                 author {
                     name
                     picture {
@@ -202,6 +235,12 @@ export const getFeaturedPosts = async (slug) => {
                 categories {
                     name
                     slug
+                }
+                destination {
+                    destinationName
+                    destinationImage {
+                      url
+                    }
                 }
             }
         }
@@ -238,6 +277,12 @@ export const getCategoryPost = async (slug) => {
                 name
                 slug
               }
+              destination {
+                destinationName
+                destinationImage {
+                  url
+                }
+              }
             }
           }
         }
@@ -247,4 +292,37 @@ export const getCategoryPost = async (slug) => {
     const result = await request(graphqlAPI, query, { slug });
   
     return result.postsConnection.edges;
+};
+
+export const getAuthorsFeaturedPosts = async (slug) => {
+    const query = gql `
+        query GetAuthorsFeaturedPosts() {
+            posts(orderBy: createdAt_DESC, last: 1, where: {author_featured_post: true}) {
+                title
+                featuredImage {
+                  url
+                }
+                slug
+                excerpt
+                author {
+                  bio
+                  facebook
+                  github
+                  name
+                  picture {
+                    url
+                  }
+                  twitter
+                }
+                destination {
+                  destinationImage {
+                    url
+                  }
+                }
+            }
+        }
+    `
+
+    const result = await request(graphqlAPI, query);
+    return result.posts;
 };

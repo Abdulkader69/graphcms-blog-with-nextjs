@@ -11,10 +11,15 @@ const Destionations = () => {
             .then((newDestinations) => setDestination(newDestinations))
     }, [])
 
+    // console.log(destinations);
+
     return (
         <div className="max-w-7xl m-auto px-4">
             <div className="destination-wrapper grid grid-cols-5 gap-4">
                 {destinations.map((destination) => (
+                    <>
+                    {/* {console.log(destinationSlug)} */}
+                    
                     <div className="destinations-item" key={destination.destinationSlug}>
                         <Link key={destination.destinationSlug} href={`/destination/${destination.destinationSlug}`}>
                             <a className="inline-block text-center">
@@ -25,6 +30,7 @@ const Destionations = () => {
                             </a>
                         </Link>
                     </div>
+                    </>
                 ))}     
             </div>
         </div>
